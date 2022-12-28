@@ -1,27 +1,10 @@
 import Layout from "../components/Layout";
 import styled from "@emotion/styled";
 import Link from "next/link";
-import { auth } from "../firebase/firebaseConfig";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import LoginButton from "../components/LoginButton";
+import { Login } from "../components/Login";
 
 export default function Home() {
-    const googleLogin = () => {
-      const provider = new GoogleAuthProvider();
-      signInWithPopup(auth, provider)
-        .then((result) => {
-          const credential:any = GoogleAuthProvider.credentialFromResult(result);
-          const token = credential.accessToken;
-          const user = result.user;
-          console.log("result", result);
-        }).catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          const email = error.customData.email;
-          const credential = GoogleAuthProvider.credentialFromError(error);
-        });
-      
-    };
-
     return (
         <Layout>
             <LoginContainer>
@@ -33,9 +16,7 @@ export default function Home() {
                     <div>
                         <button className="kakao">카카오톡 로그인</button>
                         <button className="face">페이스북 로그인</button>
-                        <button className="naver" onClick={googleLogin}>
-                            구글 로그인
-                        </button>
+                        <LoginButton text={"구글 로그인"} onClick={Login}/>
                     </div>
                     <div>
                         <Link href={"/main"}>
